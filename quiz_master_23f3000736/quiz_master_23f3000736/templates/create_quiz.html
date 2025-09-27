@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Quiz</title>
+</head>
+<body>
+    <h1>Create New Quiz</h1>
+    
+    <form method="POST" action="{{ url_for('create_quiz') }}">
+        <div>
+            <label for="chapterId">Chapter:</label>
+            <select id="chapterId" name="chapterId" required>
+                <option value="">Select Chapter</option>
+                {% for chapter in chapters %}
+                    <option value="{{ chapter.id }}">{{ chapter.name }} ({{ chapter.subject.name }})</option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div>
+            <label for="quizDate">Date of Quiz:</label>
+            <input type="date" id="quizDate" name="quizDate" required>
+        </div>
+        
+        <div>
+            <label for="quizDuration">Time Duration (minutes):</label>
+            <input type="number" id="quizDuration" name="quizDuration" min="1" required>
+        </div>
+        
+        <div>
+            <button type="submit">Create Quiz</button>
+            <a href="{{ url_for('admin_dashboard') }}">Cancel</a>
+        </div>
+    </form>
+</body>
+</html>

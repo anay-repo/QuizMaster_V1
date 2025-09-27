@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Available Quizzes</title>
+</head>
+<body>
+    <h1>Available Quizzes</h1>
+    
+    {% if quizzes %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Chapter</th>
+                    <th>Quiz Date</th>
+                    <th>Duration</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quizzes %}
+                <tr>
+                    <td>{{ quiz.chapter.name }}</td>
+                    <td>{{ quiz.date_of_quiz }}</td>
+                    <td>{{ quiz.time_duration }}</td>
+                    <td>
+                        <a href="{{ url_for('start_quiz', quiz_id=quiz.id) }}">Start Quiz</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No quizzes available for this subject.</p>
+    {% endif %}
+
+    <a href="{{ url_for('user_dashboard') }}">Back to Dashboard</a>
+</body>
+</html>

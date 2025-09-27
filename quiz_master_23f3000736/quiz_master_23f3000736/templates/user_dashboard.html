@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Dashboard</title>
+</head>
+<body>
+    <h1>Welcome, {{ user.fullname or user.username }}!</h1>
+    
+    <h2>Available Subjects and Quizzes</h2>
+    {% for subject_data in available_subjects %}
+        <div>
+            <h3>{{ subject_data.subject.name }}</h3>
+            <p>{{ subject_data.subject.description }}</p>
+            
+            {% if subject_data.quizzes %}
+                <h4>Quizzes:</h4>
+                <ul>
+                {% for quiz_info in subject_data.quizzes %}
+                    <li>
+                        Chapter: {{ quiz_info.chapter.name }}
+                        | Total Questions: {{ quiz_info.total_questions }}
+                        | Duration: {{ quiz_info.quiz.time_duration }} minutes
+                        <a href="{{ url_for('start_quiz', quiz_id=quiz_info.quiz.id) }}">Start Quiz</a>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <p>No quizzes available for this subject.</p>
+            {% endif %}
+        </div>
+    {% endfor %}
+    
+    <h2>Past Quiz Attempts</h2>
+{% if past_attempts %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Quiz</th>
+                <th>Chapter</th>
+                <th>Subject</th>
+                <th>Score</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attempt in past_attempts %}
+            <tr>
+                <td>Quiz {{ attempt.quiz_id }}</td>
+                <td>{{ attempt.quiz.chapter.name }}</td>
+                <td>{{ attempt.quiz.chapter.subject.name }}</td>
+                <td>{{ attempt.score }}/{{ attempt.total_scored }}</td>
+                <td>{{ attempt.time_stamp_of_attempt }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>No past quiz attempts.</p>
+{% endif %}
+
+ <!-- Summary Section -->
+ <h2>Your Quiz Summary</h2>
+ <div>
+     <!-- Subject-wise quiz count -->
+     <h3>Subject-wise Quiz Analysis</h3>
+     <table border="1">
+         <thead>
+             <tr>
+                 <th>Subject</th>
+                 <th>Available Quizzes</th>
+                 <th>Attempted Quizzes</th>
+             </tr>
+         </thead>
+         <tbody>
+             {% for subject in subject_stats %}
+             <tr>
+                 <td>{{ subject.name }}</td>
+                 <td>{{ subject.available_quizzes }}</td>
+                 <td>{{ subject.attempted_quizzes }}</td>
+             </tr>
+             {% endfor %}
+         </tbody>
+     </table>
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>

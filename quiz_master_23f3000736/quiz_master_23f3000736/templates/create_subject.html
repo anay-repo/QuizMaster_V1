@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Subject</title>
+</head>
+<body>
+    <div>
+        <h2>Create New Subject</h2>
+        
+        <form method="POST" action="{{ url_for('create_subject') }}">
+            <div>
+                <label for="subjectId">Subject ID</label>
+                <input type="text" id="subjectId" name="subjectId" placeholder="Enter Subject ID">
+            </div>
+            <div>
+                <label for="subjectName">Subject Name</label>
+                <input type="text" id="subjectName" name="subjectName" placeholder="Enter Subject Name" required>
+            </div>
+            <div>
+                <label for="subjectDescription">Description</label>
+                <textarea id="subjectDescription" name="subjectDescription" rows="4" placeholder="Enter Subject Description"></textarea>
+            </div>
+            <div>
+                <button type="submit">Create Subject</button>
+                <a href="{{ url_for('admin_dashboard') }}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

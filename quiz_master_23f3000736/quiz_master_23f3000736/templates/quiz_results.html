@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Results</title>
+</head>
+<body>
+    <h1>Quiz Results</h1>
+    
+    <div>
+        <h2>Performance</h2>
+        <p><strong>Subject:</strong> {{ quiz.chapter.subject.name }}</p>
+        <p><strong>Chapter:</strong> {{ quiz.chapter.name }}</p>
+        <p><strong>Quiz Duration:</strong> {{ quiz.time_duration }} minutes</p>
+        
+        <h3>Score Details</h3>
+        <p><strong>Total Questions:</strong> {{ total_questions }}</p>
+        <p><strong>Correct Answers:</strong> {{ correct_answers }}</p>
+        <p><strong>Score:</strong> {{ correct_answers }}/{{ total_questions }}</p>
+        
+        <h3>Detailed Results</h3>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Question</th>
+                    <th>Your Answer</th>
+                    <th>Correct Answer</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for question in questions %}
+                <tr>
+                    <td>{{ question.question_statement }}</td>
+                    <td>
+                        {% if question.id in user_answers %}
+                            {{ question['option' ~ user_answers[question.id]] }}
+                        {% else %}
+                            Not Answered
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ question['option' ~ question.correct_option] }}
+                    </td>
+                    <td>
+                        {% if question.id in user_answers and user_answers[question.id] == question.correct_option %}
+                            Correct
+                        {% else %}
+                            Incorrect
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <p>
+        <a href="{{ url_for('user_dashboard') }}">Back to Dashboard</a>
+    </p>
+</body>
+</html>

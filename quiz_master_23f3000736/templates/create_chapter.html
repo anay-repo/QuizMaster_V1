@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Chapter</title>
+    <!-- Bootstrap CSS can be included here if needed -->
+</head>
+<body>
+    <div class="container">
+        <h1>Create New Chapter</h1>
+        
+        <form method="POST" action="{{ url_for('create_chapter') }}">
+            <div class="form-group">
+                <label for="chapterName">Chapter Name*</label>
+                <input type="text" id="chapterName" name="chapterName" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="subjectId">Subject*</label>
+                <select id="subjectId" name="subjectId" class="form-control" required>
+                    <option value="">Select Subject</option>
+                    {% for subject in subjects %}
+                        <option value="{{ subject.id }}">{{ subject.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="chapterDescription">Description</label>
+                <textarea id="chapterDescription" name="chapterDescription" class="form-control" rows="4"></textarea>
+            </div>
+            <div class="form-group mt-4">
+                <button type="submit" class="btn btn-primary">Save Chapter</button>
+                <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary ml-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Bootstrap JS and other scripts can be included here if needed -->
+</body>
+</html>

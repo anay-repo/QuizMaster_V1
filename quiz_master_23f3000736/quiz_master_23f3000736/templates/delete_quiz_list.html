@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Delete Quiz</title>
+</head>
+<body>
+    <h1>Select Quiz to Delete</h1>
+    
+    {% if quizzes %}
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Chapter</th>
+                    <th>Date</th>
+                    <th>Duration</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for quiz in quizzes %}
+                <tr>
+                    <td>{{ quiz.id }}</td>
+                    <td>{{ quiz.chapter.name }}</td>
+                    <td>{{ quiz.date_of_quiz }}</td>
+                    <td>{{ quiz.time_duration }} minutes</td>
+                    <td>
+                        <a href="{{ url_for('delete_quiz', id=quiz.id) }}" onclick="return confirm('Are you sure you want to delete this quiz and all associated questions?')">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No quizzes found. Please create a quiz first.</p>
+    {% endif %}
+    
+    <div>
+        <a href="{{ url_for('admin_dashboard') }}">Back to Dashboard</a>
+    </div>
+</body>
+</html>

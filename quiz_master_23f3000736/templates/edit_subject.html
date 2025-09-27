@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Subject</title>
+</head>
+<body>
+    <div>
+        <h2>Edit Subject</h2>
+    
+        <form method="POST" action="{{ url_for('edit_subject', id=subject.id) }}">
+            <div>
+                <label for="subjectId">Subject ID</label>
+                <input type="text" id="subjectId" value="{{ subject.id }}" disabled>
+            </div>
+            <div>
+                <label for="subjectName">Subject Name</label>
+                <input type="text" id="subjectName" name="subjectName" value="{{ subject.name }}" required>
+            </div>
+            <div>
+                <label for="subjectDescription">Description</label>
+                <textarea id="subjectDescription" name="subjectDescription" rows="4">{{ subject.description }}</textarea>
+            </div>
+            <div>
+                <button type="submit">Update Subject</button>
+                <a href="{{ url_for('admin_dashboard') }}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

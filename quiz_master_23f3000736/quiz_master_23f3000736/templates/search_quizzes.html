@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Quizzes</title>
+</head>
+<body>
+    <h1>Search Results for "{{ search_query }}"</h1>
+    
+    <p><a href="{{ url_for('user_dashboard') }}">Back to Dashboard</a></p>
+    
+    <form action="{{ url_for('search_quizzes') }}" method="get">
+        <input type="text" name="search" placeholder="Search subjects or quizzes" value="{{ search_query }}">
+        <button type="submit">Search</button>
+    </form>
+    
+    {% if search_results %}
+        {% for subject_data in search_results %}
+            <div>
+                <h2>{{ subject_data.subject.name }}</h2>
+                <p>{{ subject_data.subject.description }}</p>
+                
+                <h3>Available Quizzes:</h3>
+                {% if subject_data.quizzes %}
+                    <ul>
+                    {% for quiz_info in subject_data.quizzes %}
+                        <li>
+                            Chapter: {{ quiz_info.chapter.name }}
+                            | Total Questions: {{ quiz_info.total_questions }}
+                            | Duration: {{ quiz_info.quiz.time_duration }} minutes
+                            <a href="{{ url_for('start_quiz', quiz_id=quiz_info.quiz.id) }}">Start Quiz</a>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No quizzes available for this subject.</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No results found for "{{ search_query }}".</p>
+    {% endif %}
+</body>
+</html>
